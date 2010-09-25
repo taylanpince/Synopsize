@@ -1,0 +1,4 @@
+*.pyc
+build/synopsize/settings_local.py
+build/synopsize/media/admin
+build/synopsize/media/files
