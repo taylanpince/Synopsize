@@ -49,6 +49,11 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.realpath(os.path.dirname(__file__)), 'templates/'),
 )
 
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/account/register-or-login/'
+LOGOUT_URL = '/account/logout/'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,7 +68,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'south',
 
-    
+    'profiles',
 )
 
 try:

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>{{ user.username }}</h1>
+<form action="{% url profiles_profile_edit %}" method="post">
+	{{ user_form.as_p }}
+	<p><input type="submit" value="Save" /></p>
+</form>
+
+<p><a href="{% url profiles_password_change %}">Change Password</a></p>
+
+{% endblock %}

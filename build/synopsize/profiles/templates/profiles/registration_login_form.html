@@ -1,0 +1,8 @@
+<form id="RegistrationForm" class="{% if form.non_field_errors or form.errors %}has-errors{% endif %}" action="{% url profiles_register_or_login %}{% if next %}?next={{ next }}{% endif %}" method="post">
+	<input type="image" src="{{ MEDIA_URL }}images/btn-go.png" class="submit" value="Submit" />
+	{% if form.non_field_errors %}<p class="errors">{{ form.non_field_errors|join:", " }}</p>{% endif %}
+	{% if form.errors %}{% for field in form %}<p class="errors">{{ field.errors|striptags }}</p>{% endfor %}{% endif %}
+	<p>{{ form.email.label_tag }}{{ form.email }}</p>
+	<p>{{ form.password.label_tag }}{{ form.password }}</p>
+	<input type="hidden" name="action" value="1" />
+</form>
