@@ -5,6 +5,7 @@
 
 <h1>{{ user.username }}</h1>
 <form action="{% url profiles_profile_edit %}" method="post">
+	{% csrf_token %}
 	{{ user_form.as_p }}
 	<p><input type="submit" value="Save" /></p>
 </form>

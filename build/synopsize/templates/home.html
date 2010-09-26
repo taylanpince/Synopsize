@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load profile_tags %}
+
+{% block class %}home{% endblock %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% include "profiles/registration_complete.html" %}
+{% else %}
+{% registration_login_form %}
+{% endif %}
+
+{% endblock %}
