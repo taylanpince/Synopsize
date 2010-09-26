@@ -65,10 +65,13 @@ INSTALLED_APPS = (
     'django.contrib.markup',
 
     'django_extensions',
+    'djangoratings',
     'sorl.thumbnail',
     'south',
+    'tagging',
 
     'profiles',
+    'synopses',
 )
 
 try:
