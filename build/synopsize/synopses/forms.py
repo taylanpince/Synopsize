@@ -73,8 +73,9 @@ class ValidatingFormSet(forms.models.BaseInlineFormSet):
         has_object = False
 
         for form in self.forms:
-            if form.has_changed():
-                has_object = True
+            if hasattr(form, 'cleaned_data'):
+                if form.cleaned_data and not form.cleaned_data.get("DELETE", False):
+                    has_object = True
 
         if not has_object:
             raise forms.ValidationError(_(u"You have to enter at least one point and one fact."))

@@ -87,33 +87,37 @@ def update_synopsis(request, synopsis_id):
     if not (synopsis.user == request.user):
         raise Http404
 
-    FactFormset = modelformset_factory(Fact, form=FactForm, formset=ValidatingFormSet, extra=3)
-    PointFormset = modelformset_factory(Point, form=PointForm, formset=ValidatingFormSet, extra=3)
+    FactFormset = inlineformset_factory(Synopsis, Fact, formset=ValidatingFormSet, exclude=["order"], extra=3)
+    PointFormset = inlineformset_factory(Synopsis, Point, formset=ValidatingFormSet, exclude=["order"], extra=3)
 
     if request.method == "POST":
         form = SynopsisForm(request.POST, instance=synopsis)
-        fact_formset = FactFormset(request.POST, queryset=synopsis.facts.all())
-        point_formset = PointFormset(request.POST, queryset=synopsis.points.all())
 
-        if form.is_valid() and fact_formset.is_valid() and point_formset.is_valid():
+        if form.is_valid():
             synopsis = form.save(commit=False)
             synopsis.user = request.user
-            synopsis.save()
 
-            facts = fact_formset.save()
-            points = point_formset.save()
+            fact_formset = FactFormset(request.POST, instance=synopsis, prefix="facts")
+            point_formset = PointFormset(request.POST, instance=synopsis, prefix="points")
 
-            synopsis.facts.add(*facts)
-            synopsis.points.add(*points)
+            if fact_formset.is_valid() and point_formset.is_valid():
+                synopsis.save()
 
-            return HttpResponseRedirect(synopsis.get_absolute_url())
+                facts = fact_formset.save()
+                points = point_formset.save()
+
+                return HttpResponseRedirect(synopsis.get_absolute_url())
+        else:
+            fact_formset = FactFormset(request.POST, instance=synopsis, prefix="facts")
+            point_formset = PointFormset(request.POST, instance=synopsis, prefix="points")
     else:
         form = SynopsisForm(instance=synopsis)
-        fact_formset = FactFormset(queryset=synopsis.facts.all())
-        point_formset = PointFormset(queryset=synopsis.points.all())
+        fact_formset = FactFormset(instance=synopsis, prefix="facts")
+        point_formset = PointFormset(instance=synopsis, prefix="points")
 
     return render_to_response("synopses/update_synopsis.html", {
         "form": form,
+        "synopsis": synopsis,
         "fact_formset": fact_formset,
         "point_formset": point_formset,
     }, context_instance=RequestContext(request))
