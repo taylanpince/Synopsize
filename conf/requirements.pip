@@ -1,4 +1,4 @@
-django==1.2.2
+django==1.2.3
 django-extensions==0.5
 south==0.7.2
 sorl-thumbnail==3.2.5

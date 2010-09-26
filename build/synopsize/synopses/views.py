@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.forms.models import modelformset_factory
+from django.forms.models import inlineformset_factory, modelformset_factory
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -41,30 +41,35 @@ def create_synopsis(request):
     """
     Create a new synopsis
     """
-    FactFormset = modelformset_factory(Fact, form=FactForm, formset=ValidatingFormSet, extra=3)
-    PointFormset = modelformset_factory(Point, form=PointForm, formset=ValidatingFormSet, extra=3)
+    FactFormset = inlineformset_factory(Synopsis, Fact, formset=ValidatingFormSet, exclude=["order"], extra=3, can_delete=False)
+    PointFormset = inlineformset_factory(Synopsis, Point, formset=ValidatingFormSet, exclude=["order"], extra=3, can_delete=False)
 
     if request.method == "POST":
         form = SynopsisForm(request.POST)
-        fact_formset = FactFormset(request.POST)
-        point_formset = PointFormset(request.POST)
 
-        if form.is_valid() and fact_formset.is_valid() and point_formset.is_valid():
+        if form.is_valid():
             synopsis = form.save(commit=False)
             synopsis.user = request.user
-            synopsis.save()
 
-            facts = fact_formset.save()
-            points = point_formset.save()
+            fact_formset = FactFormset(request.POST, instance=synopsis, prefix="facts")
+            point_formset = PointFormset(request.POST, instance=synopsis, prefix="points")
 
-            synopsis.facts.add(*facts)
-            synopsis.points.add(*points)
+            if fact_formset.is_valid() and point_formset.is_valid():
+                synopsis.save()
 
-            return HttpResponseRedirect(synopsis.get_absolute_url())
+                facts = fact_formset.save()
+                points = point_formset.save()
+
+                return HttpResponseRedirect(synopsis.get_absolute_url())
+        else:
+            synopsis = Synopsis()
+            fact_formset = FactFormset(request.POST, instance=synopsis, prefix="facts")
+            point_formset = PointFormset(request.POST, instance=synopsis, prefix="points")
     else:
         form = SynopsisForm()
-        fact_formset = FactFormset()
-        point_formset = PointFormset()
+        synopsis = Synopsis()
+        fact_formset = FactFormset(instance=synopsis, prefix="facts")
+        point_formset = PointFormset(instance=synopsis, prefix="points")
 
     return render_to_response("synopses/create_synopsis.html", {
         "form": form,

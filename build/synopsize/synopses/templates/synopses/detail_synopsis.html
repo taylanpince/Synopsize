@@ -5,4 +5,24 @@
 
 <h1>{{ synopsis.title }}</h1>
 
+{% if synopsis.journal %}
+<p>Journal: {{ synopsis.journal.name }}</p>
+{% endif %}
+
+<ul>
+	{% for point in synopsis.points.all %}
+	<li>{{ point.order }} - {{ point.content }}</li>
+	{% empty %}
+	<li>No points found.</li>
+	{% endfor %}
+</ul>
+
+<ul>
+	{% for fact in synopsis.facts.all %}
+	<li>{{ fact.order }} - {{ fact.content }}</li>
+	{% empty %}
+	<li>No facts found.</li>
+	{% endfor %}
+</ul>
+
 {% endblock %}

@@ -47,21 +47,36 @@ class FactForm(forms.ModelForm):
         exclude = ("order", "synopsis")
 
 
-class ValidatingFormSet(forms.models.BaseModelFormSet):
+class ValidatingFormSet(forms.models.BaseInlineFormSet):
     """
     A FormSet that makes sure there is at least one object in it
     """
+    def save(self, commit=True):
+        objects = super(ValidatingFormSet, self).save(commit=False)
+        count = 0
+
+        for obj in objects:
+            obj.order = count
+
+            if commit:
+                obj.save()
+
+            count += 1
+
+        if commit:
+            self.save_m2m()
+
+        return objects
+
     def clean(self):
         cleaned_data = super(ValidatingFormSet, self).clean()
+        has_object = False
 
-        if cleaned_data:
-            has_object = False
+        for form in self.forms:
+            if form.has_changed():
+                has_object = True
 
-            for form in self.forms:
-                if form.has_changed():
-                    has_object = True
+        if not has_object:
+            raise forms.ValidationError(_(u"You have to enter at least one point and one fact."))
 
-            if not has_object:
-                raise forms.ValidationError(_(u"You have to enter at least one point and one fact."))
-
-            return cleaned_data
+        return cleaned_data
