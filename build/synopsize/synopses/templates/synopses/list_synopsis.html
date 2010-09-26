@@ -1,0 +1,16 @@
+{% extends "synopses/base.html" %}
+
+
+{% block content %}
+
+<h1>Recent Synopses</h1>
+
+<ul>
+	{% for synopsis in synopses %}
+	<li><a href="{{ synopsis.get_absolute_url }}">{{ synopsis.title }}</a></li>
+	{% empty %}
+	<li>No Results</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

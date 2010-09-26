@@ -11,6 +11,9 @@ urlpatterns = patterns('',
     
     # Profiles (account / profiles)
     (r'^', include("profiles.urls")),
+    
+    # Synopses
+    (r'^synopses/', include("synopses.urls")),
 )
 
 urlpatterns += patterns('django.views.generic.simple',

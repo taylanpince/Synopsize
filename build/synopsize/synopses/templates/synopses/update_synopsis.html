@@ -1,0 +1,12 @@
+{% extends "synopses/base.html" %}
+
+
+{% block content %}
+
+<h1>Update Synopsis: {{ synopsis.title }}</h1>
+
+<form method="post" action="{% url synopses_update_synopsis synopsis.pk %}">
+	{% include "synopses/synopsis_form.html" %}
+</form>
+
+{% endblock %}

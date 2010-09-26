@@ -1,0 +1,12 @@
+{% extends "synopses/base.html" %}
+
+
+{% block content %}
+
+<h1>Create a Synopsis</h1>
+
+<form method="post" action="{% url synopses_create_synopsis %}">
+	{% include "synopses/synopsis_form.html" %}
+</form>
+
+{% endblock %}

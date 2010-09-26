@@ -1,0 +1,16 @@
+{% extends "synopses/base.html" %}
+
+
+{% block content %}
+
+<h1>Delete Synopsis</h1>
+
+{% if synopsis %}
+<p>Are you sure you would like to delete this synopsis?</p>
+<p>{{ synopsis.title }}</p>
+<p><a href="?confirm=True">Confirm</a></p>
+{% else %}
+<p>Synopsis has been successfully deleted.</p>
+{% endif %}
+
+{% endblock %}

@@ -22,6 +22,12 @@ class Synopsis(models.Model):
         verbose_name = _("Synopsis")
         verbose_name_plural = _("Synopses")
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ("synopses_detail_synopsis", (), {
+            "synopsis_id": self.pk,
+        })
+
     def __unicode__(self):
         return u"%(title)s by %(user)s" % {
             "title": self.title,
