@@ -3,10 +3,30 @@
 
 {% block content %}
 
-<h1>{{ profile_user.get_profile.name }}</h1>
+{% with profile_user.get_profile as profile %}
+<h1>{{ profile.name }}</h1>
 
 {% ifequal user profile_user %}
 <p><a href="{% url profiles_profile_edit %}">Edit My Profile</a></p>
 {% endifequal %}
+
+<h2>Synopses</h2>
+<ul>
+	{% for synopsis in profile.synopses %}
+	<li><a href="{{ synopsis.get_absolute_url }}">{{ synopsis.title }}</a></li>
+	{% empty %}
+	<li>This user hasn't created a synopsis yet.</li>
+	{% endfor %}
+</ul>
+
+<h2>Favorites</h2>
+<ul>
+	{% for synopsis in profile.favorites.all %}
+	<li><a href="{{ synopsis.get_absolute_url }}">{{ synopsis.title }}</a></li>
+	{% empty %}
+	<li>This user hasn't added a synopsis to their favorites list yet.</li>
+	{% endfor %}
+</ul>
+{% endwith %}
 
 {% endblock %}

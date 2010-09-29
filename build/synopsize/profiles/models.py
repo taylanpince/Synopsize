@@ -8,6 +8,7 @@ class UserProfile(models.Model):
     Stores additional info for a registered user
     """
     user = models.ForeignKey(User, verbose_name=_("User"), unique=True, related_name="profiles")
+    favorites = models.ManyToManyField("synopses.Synopsis", verbose_name=_("Favorites"), related_name="users", blank=True, null=True)
 
     class Meta:
         verbose_name = _("User Profile")
@@ -29,3 +30,10 @@ class UserProfile(models.Model):
             return self.user.first_name
         else:
             return self.user.email
+
+    @property
+    def synopses(self):
+        """
+        Return a list of synopses that belongs to this user
+        """
+        return self.user.synopses.all()

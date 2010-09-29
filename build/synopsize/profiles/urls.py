@@ -4,6 +4,8 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('profiles.views',
     url(r'^profiles/$', 'profile_landing', name='profiles_profile_landing'),
     url(r'^profiles/(?P<username>[-\w]+)/$', 'profile', name='profiles_profile'),
+    url(r'^account/favorites/add/(?P<synopsis_id>[0-9]+)/$', 'favorites_add', name='profiles_favorites_add'),
+    url(r'^account/favorites/remove/(?P<synopsis_id>[0-9]+)/$', 'favorites_remove', name='profiles_favorites_remove'),
     url(r'^account/edit/$', 'profile_edit', name='profiles_profile_edit'),
     url(r'^account/register-or-login/$', 'register_or_login', name='profiles_register_or_login'),
     url(r'^account/logout/$', 'logout', name='profiles_logout'),

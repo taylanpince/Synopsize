@@ -1,5 +1,7 @@
 {% extends "synopses/base.html" %}
 
+{% load profile_tags %}
+
 
 {% block content %}
 
@@ -24,5 +26,11 @@
 	<li>No facts found.</li>
 	{% endfor %}
 </ul>
+
+{% if synopsis|is_favorite:user %}
+<a href="{% url profiles_favorites_remove synopsis.pk %}?next={{ synopsis.get_absolute_url }}">Remove from Favorites</a>
+{% else %}
+<a href="{% url profiles_favorites_add synopsis.pk %}?next={{ synopsis.get_absolute_url }}">Add to Favorites</a>
+{% endif %}
 
 {% endblock %}

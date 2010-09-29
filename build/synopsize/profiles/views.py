@@ -10,6 +10,7 @@ from django.template import RequestContext
 from profiles.forms import RegistrationLoginForm
 from profiles.forms import UserForm, UserProfileForm
 from profiles.models import UserProfile
+from synopses.models import Synopsis
 
 
 def register_or_login(request):
@@ -90,3 +91,35 @@ def profile_edit(request):
     return render_to_response("profiles/profile_form.html", {
         "user_form": user_form,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def favorites_add(request, synopsis_id):
+    """
+    Add the specified synopsis to the active user's favorites list
+    """
+    synopsis = get_object_or_404(Synopsis, pk=synopsis_id)
+    profile = request.user.get_profile()
+
+    profile.favorites.add(synopsis)
+
+    if request.GET.get("next", None):
+        return HttpResponseRedirect(request.GET.get("next"))
+    else:
+        return HttpResponseRedirect(reverse("profiles_profile_landing"))
+
+
+@login_required
+def favorites_remove(request, synopsis_id):
+    """
+    Remove the specified synopsis from the active user's favorites list
+    """
+    synopsis = get_object_or_404(Synopsis, pk=synopsis_id)
+    profile = request.user.get_profile()
+
+    profile.favorites.remove(synopsis)
+
+    if request.GET.get("next", None):
+        return HttpResponseRedirect(request.GET.get("next"))
+    else:
+        return HttpResponseRedirect(reverse("profiles_profile_landing"))
