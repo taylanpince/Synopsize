@@ -1,6 +1,8 @@
 {% extends "synopses/base.html" %}
 
 {% load profile_tags %}
+{% load ratings %}
+{% load synopsis_tags %}
 
 
 {% block content %}
@@ -31,6 +33,15 @@
 <a href="{% url profiles_favorites_remove synopsis.pk %}?next={{ synopsis.get_absolute_url }}">Remove from Favorites</a>
 {% else %}
 <a href="{% url profiles_favorites_add synopsis.pk %}?next={{ synopsis.get_absolute_url }}">Add to Favorites</a>
+{% endif %}
+
+{% rating_by_user user on synopsis.rating as rating %}
+
+{% if rating %}
+<p>You rated this synopsis {{ rating }}/5</p>
+{% else %}
+<p>Rate this synopsis:</p>
+{% rating_form synopsis %}
 {% endif %}
 
 {% endblock %}

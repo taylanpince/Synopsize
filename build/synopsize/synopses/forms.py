@@ -81,3 +81,10 @@ class ValidatingFormSet(forms.models.BaseInlineFormSet):
             raise forms.ValidationError(_(u"You have to enter at least one point and one fact."))
 
         return cleaned_data
+
+
+class RatingForm(forms.Form):
+    """
+    A basic form for rating synsopses
+    """
+    rating = forms.ChoiceField(label=_("Rating"), choices=[(i, str(i)) for i in range(1, 6)], widget=forms.RadioSelect)

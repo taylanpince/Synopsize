@@ -7,4 +7,5 @@ urlpatterns = patterns('synopses.views',
     url(r'^(?P<synopsis_id>[0-9]+)/$', 'detail_synopsis', name='synopses_detail_synopsis'),
     url(r'^(?P<synopsis_id>[0-9]+)/update/$', 'update_synopsis', name='synopses_update_synopsis'),
     url(r'^(?P<synopsis_id>[0-9]+)/delete/$', 'delete_synopsis', name='synopses_delete_synopsis'),
+    url(r'^(?P<synopsis_id>[0-9]+)/rate/$', 'rate_synopsis', name='synopses_rate_synopsis'),
 )

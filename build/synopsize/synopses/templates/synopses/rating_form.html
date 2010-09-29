@@ -1,0 +1,5 @@
+<form method="post" action="{% url synopses_rate_synopsis synopsis.pk %}">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<p><input type="submit" value="Rate" /></p>
+</form>

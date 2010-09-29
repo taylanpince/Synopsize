@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.forms.models import inlineformset_factory, modelformset_factory
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from synopses.forms import SynopsisForm, PointForm, FactForm, ValidatingFormSet
+from djangoratings.views import AddRatingView
+
+from synopses.forms import SynopsisForm, PointForm, FactForm, ValidatingFormSet, RatingForm
 from synopses.models import Synopsis, Fact, Point
 
 
@@ -123,6 +126,7 @@ def update_synopsis(request, synopsis_id):
     }, context_instance=RequestContext(request))
 
 
+@login_required
 def delete_synopsis(request, synopsis_id):
     """
     Delete a specific synopsis
@@ -135,4 +139,36 @@ def delete_synopsis(request, synopsis_id):
 
     return render_to_response("synopses/delete_synopsis.html", {
         "synopsis": synopsis,
+    }, context_instance=RequestContext(request))
+
+
+@login_required
+def rate_synopsis(request, synopsis_id):
+    """
+    Rate a specific synopsis
+    """
+    synopsis = get_object_or_404(Synopsis, pk=synopsis_id)
+
+    if request.method == "POST":
+        form = RatingForm(request.POST)
+
+        if form.is_valid():
+            content_type = ContentType.objects.get_for_model(synopsis)
+            response = AddRatingView()(request, **{
+                "content_type_id": content_type.pk,
+                "object_id": synopsis.pk,
+                "field_name": "rating",
+                "score": form.cleaned_data.get("rating"),
+            })
+
+            if response.status_code == 200:
+                return HttpResponseRedirect(synopsis.get_absolute_url())
+            else:
+                print response.content
+    else:
+        form = RatingForm()
+
+    return render_to_response("synopses/rate_synopsis.html", {
+        "synopsis": synopsis,
+        "form": form,
     }, context_instance=RequestContext(request))
