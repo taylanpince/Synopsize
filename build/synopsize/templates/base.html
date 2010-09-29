@@ -6,7 +6,7 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-	<title>Synopsize &mdash; {% block title %}[TAGLINE]{% endblock %}</title>
+	<title>Snopsize &mdash; {% block title %}[TAGLINE]{% endblock %}</title>
 	
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico" />
 	
@@ -15,7 +15,7 @@
 		@import "{{ MEDIA_URL }}css/screen.css";
 	</style>
 	
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
+	{% comment %}<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>{% endcomment %}
 
 	{% block js %}{% endblock %}
 	
@@ -29,6 +29,9 @@
 		{% block nav %}
 		{% if user.is_authenticated %}
 		<ul>
+			<li><a href="{% url home %}">Home</a></li>
+			<li><a href="{% url synopses_list_synopsis %}">Recent Synopses</a></li>
+			<li><a href="{% url synopses_create_synopsis %}">Create New Synopsis</a></li>
 			<li><a href="{% url profiles_profile_landing %}">My Profile</a></li>
 			<li><a href="{% url profiles_logout %}">Logout</a></li>
 		</ul>

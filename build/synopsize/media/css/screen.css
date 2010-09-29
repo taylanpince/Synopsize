@@ -1,0 +1,67 @@
+/*
+ *	Title: Screen CSS Styles for vendu.com
+ *	Date: April 1st, 2010
+ *  Author: Taylan Pince (taylanpince at gmail dot com)
+ */
+
+
+/* @group Global */
+
+body {
+    font-size: 14px;
+    line-height: 16px;
+    color: #4a4b4c;
+    background-color: #ccc;
+}
+
+a,
+a:link,
+a:visited,
+a:active {
+    color: #47225e;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #7d5595;
+    text-decoration: none;
+}
+
+p {
+    margin: 0px 0px 15px 0px;
+}
+
+p.green {
+    color: #95ca5b;
+}
+
+p.no-margin {
+    margin-bottom: 0px;
+}
+
+p.low-margin {
+    margin-bottom: 4px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0px 0px 15px 0px;
+}
+
+/* @end */
+
+
+/* @group Layout */
+
+#Container {
+    width: 840px;
+    padding: 20px;
+    margin: 30px auto 20px auto;
+    background-color: #FFF;
+    border: 1px solid #333;
+}
+
+
+
+/* @end */
