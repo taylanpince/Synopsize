@@ -2,8 +2,8 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 
 
-env.root_dir = "/home/snopsizeteam/sites/snopsize"
-env.project_dir = "%s/src/snopsize" % env.root_dir
+env.root_dir = "/home/snopsizeteam/sites/synopsize"
+env.project_dir = "%s/src/synopsize" % env.root_dir
 env.user = "snopsizeteam"
 env.hosts = [
     "184.106.238.181",

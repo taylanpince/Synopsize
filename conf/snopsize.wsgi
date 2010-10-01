@@ -2,12 +2,12 @@ import os
 import sys
 import site
 
-site.addsitedir('/home/snopsizeteam/sites/snopsize/lib/python2.6/site-packages')
+site.addsitedir('/home/snopsizeteam/sites/synopsize/lib/python2.6/site-packages')
 
-sys.path.append("/home/snopsizeteam/sites/snopsize/src/snopsize/build")
-sys.path.append("/home/snopsizeteam/sites/snopsize/src/snopsize/build/snopsize")
+sys.path.append("/home/snopsizeteam/sites/synopsize/src/synopsize/build")
+sys.path.append("/home/snopsizeteam/sites/synopsize/src/synopsize/build/synopsize")
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "snopsize.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "synopsize.settings"
 
 import django.core.handlers.wsgi
 
