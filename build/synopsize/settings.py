@@ -61,7 +61,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'django.contrib.gis',
     'django.contrib.markup',
 
     'django_extensions',
