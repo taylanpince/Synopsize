@@ -31,10 +31,6 @@ p {
     margin: 0px 0px 15px 0px;
 }
 
-p.green {
-    color: #95ca5b;
-}
-
 p.no-margin {
     margin-bottom: 0px;
 }
@@ -47,6 +43,16 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     margin: 0px 0px 15px 0px;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px 0px 8px 0px;
+}
+
+ul {
+    margin: 0px 0px 10px 0px;
 }
 
 /* @end */
